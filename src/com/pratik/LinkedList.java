@@ -19,24 +19,26 @@ public class LinkedList {
     public void addLast(int item) {
         var node = new Node(item);
 
-        if (isEmpty()) {
+        if (isEmpty())
             first = last = node;
-        } else {
+        else {
             last.next = node;
             last = node;
         }
+
         size++;
     }
 
     public void addFirst(int item) {
         var node = new Node(item);
 
-        if (isEmpty()) {
+        if (isEmpty())
             first = last = node;
-        } else {
+        else {
             node.next = first;
             first = node;
         }
+
         size++;
     }
 
@@ -48,9 +50,7 @@ public class LinkedList {
         int index = 0;
         var current = first;
         while (current != null) {
-            if (current.value == item) {
-                return index;
-            }
+            if (current.value == item) return index;
             current = current.next;
             index++;
         }
@@ -62,39 +62,39 @@ public class LinkedList {
     }
 
     public void removeFirst() {
-        if (isEmpty()) {
+        if (isEmpty())
             throw new NoSuchElementException();
-        }
-        if (first == last) {
+
+        if (first == last)
             first = last = null;
-        } else {
+        else {
             var second = first.next;
             first.next = null;
             first = second;
         }
+
         size--;
     }
 
     public void removeLast() {
-        if (isEmpty()) {
+        if (isEmpty())
             throw new NoSuchElementException();
-        }
-        if (first == last) {
+
+        if (first == last)
             first = last = null;
-        } else {
+        else {
             var previous = getPrevious(last);
             last = previous;
             last.next = null;
         }
+
         size--;
     }
 
     private Node getPrevious(Node node) {
         var current = first;
         while (current != null) {
-            if(current.next == node) {
-                return current;
-            }
+            if (current.next == node) return current;
             current = current.next;
         }
         return null;
@@ -112,13 +112,13 @@ public class LinkedList {
             array[index++] = current.value;
             current = current.next;
         }
+
         return array;
     }
 
     public void reverse() {
-        if (isEmpty()) {
-            return;
-        }
+        if (isEmpty()) return;
+
         var previous = first;
         var current = first.next;
         while (current != null) {
@@ -127,24 +127,77 @@ public class LinkedList {
             previous = current;
             current = next;
         }
+
         last = first;
         last.next = null;
         first = previous;
     }
 
     public int getKthFromTheEnd(int k) {
+        if (isEmpty())
+            throw new IllegalStateException();
+
         var a = first;
         var b = first;
         for (int i = 0; i < k - 1; i++) {
             b = b.next;
-            if (b == null) {
+            if (b == null)
                 throw new IllegalArgumentException();
-            }
         }
         while (b != last) {
             a = a.next;
             b = b.next;
         }
         return a.value;
+    }
+
+    public void printMiddle() {
+        if (isEmpty())
+            throw new IllegalStateException();
+
+        var a = first;
+        var b = first;
+        while (b != last && b.next != last) {
+            b = b.next.next;
+            a = a.next;
+        }
+
+        if (b == last)
+            System.out.println(a.value);
+        else
+            System.out.println(a.value + ", " + a.next.value);
+    }
+
+    public boolean hasLoop() {
+        var slow = first;
+        var fast = first;
+
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+
+            if (slow == fast)
+                return true;
+        }
+
+        return false;
+    }
+
+    public static LinkedList createWithLoop() {
+        var list = new LinkedList();
+        list.addLast(10);
+        list.addLast(20);
+        list.addLast(30);
+
+        // Get a reference to 30
+        var node = list.last;
+
+        list.addLast(40);
+        list.addLast(50);
+
+        // Create the loop
+        list.last.next = node;
+
+        return list;
     }
 }

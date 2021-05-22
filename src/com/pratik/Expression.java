@@ -4,28 +4,29 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Stack;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Stack;
+
 public class Expression {
 
-    private final List<Character> leftBrackets = Arrays.asList('(', '<', '[', '{');
-    private final List<Character> rightBrackets = Arrays.asList(')', '>', ']', '}');
+    private final List<Character> leftBrackets
+            = Arrays.asList('(', '<', '[', '{');
+    private final List<Character> rightBrackets
+            = Arrays.asList(')', '>', ']', '}');
 
     public boolean isBalanced(String input) {
         Stack<Character> stack = new Stack<>();
 
-        for (char ch: input.toCharArray()) {
-            if (isLeftBracket(ch)) {
+        for (char ch : input.toCharArray()) {
+            if (isLeftBracket(ch))
                 stack.push(ch);
-            }
 
             if (isRightBracket(ch)) {
-                if (stack.empty()) {
-                    return false;
-                }
+                if (stack.empty()) return false;
 
                 var top = stack.pop();
-                if (bracketsMatch(top, ch)) {
-                    return false;
-                }
+                if (!bracketsMatch(top, ch)) return false;
             }
         }
 
