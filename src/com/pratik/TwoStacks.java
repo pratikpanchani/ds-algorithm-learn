@@ -1,7 +1,29 @@
 package com.pratik;
 
-
 import java.util.Arrays;
+
+// We could solve this problem by dividing the
+// array in half and using the left and right space
+// for each stack. This approach doesn't make use
+// of the available space efficiently. What if we
+// need more items in one stack?
+
+// A better implementation: we need two variables
+// that determine the top of each stack (top1, top2).
+
+// For the first stack, we start filling the array
+// from the left. So, top1 is initially -1 because
+// the stack is empty. As we push items in the first
+// stack, we increase top1.
+
+// For the second stack, we start filling the array
+// from the right. Initially, top2 is equal to
+// the length of the array. As we push items to
+// the second stack, we decrease top2.
+//
+// When pushing into either stack, we check to
+// see if top1 and top2 are next to each other.
+// That means both stacks are full.
 
 public class TwoStacks {
     private int top1;
@@ -65,4 +87,3 @@ public class TwoStacks {
         return Arrays.toString(items);
     }
 }
-
